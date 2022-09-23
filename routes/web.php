@@ -22,6 +22,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/admin', [LoginController::class, 'admin'])->name('admin-login');
     Route::post('/', [LoginController::class, 'logsis'])->name('login-siswa');
     Route::post('/admin', [LoginController::class, 'logmin'])->name('login-admin');
+    Route::get('/laporan/{admin:user_uuid}', [LoginController::class, 'ortu']);
 });
 Route::middleware('auth')->group(function () {
     Route::middleware(['role:superadmin'])->group(function () {
@@ -51,9 +52,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/logout', [LoginController::class, 'logout'])->name('logout');
     });
     Route::middleware(['role:siswa'])->group(function () {
-        Route::get('/dashboard', [LoginController::class, 'dashmin'])->name('dashmin');
+        Route::get('/dashboard', [LoginController::class, 'dashsis'])->name('dassis');
         Route::get('/profile', [LoginController::class, 'profile'])->name('profile');
         Route::post('/profile', [LoginController::class, 'update_profile'])->name('update-profile');
+        Route::get('/logout', [LoginController::class, 'logout'])->name('siswa-logout');
     });
     // Route::get('/admin/dashboard', [LoginController::class, 'dashmin'])->name('dashmin');
     //     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('logout');

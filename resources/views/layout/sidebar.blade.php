@@ -50,9 +50,15 @@
         </li> --}}
 
         <li>
-            <a href="{{ route('logout') }}">
-                <i class="fa fa-sign-out"></i> <span>logout</span>
-            </a>
+            @if ($admin->roles()->first()->name == 'superadmin')
+                <a href="{{ route('logout') }}">
+                    <i class="fa fa-sign-out"></i> <span>logout</span>
+                </a>
+            @elseif($admin->roles()->first()->name == 'siswa')
+                <a href="{{ route('siswa-logout') }}">
+                    <i class="fa fa-sign-out"></i> <span>logout</span>
+                </a>
+            @endif
         </li>
 
         {{-- <li>

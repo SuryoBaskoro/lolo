@@ -17,7 +17,7 @@ class PelanggaranSiswa extends Model
     ];
     public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
     // public function pelanggaran()
     // {

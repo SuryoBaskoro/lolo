@@ -40,7 +40,15 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            showing
+                            {{ $pelanggaran->firstItem() }}
+                            to
+                            {{ $pelanggaran->lastItem() }}
+                            of
+                            {{ $pelanggaran->total() }}
+                            entries
                         </table>
+                        {{ $pelanggaran->links() }}
                     </div>
                 </div>
             </div>

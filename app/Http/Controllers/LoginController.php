@@ -8,6 +8,7 @@ use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use App\Models\PelanggaranSiswa;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,7 +33,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $user = User::find(auth()->id());
             if ($user->roles()->first()->name == 'siswa') {
-                return redirect()->route('dashmin');
+                return redirect()->route('dassis');
             } else {
                 return redirect()->back()->with('gagal', 'Anda Bukan Siswa Disini');
             }
@@ -66,10 +67,19 @@ class LoginController extends Controller
             'kelas' => Kelas::all()->count(),
         ]);
     }
+    public function dashsis()
+    {
+        return view('partisi.dashmin', [
+            'admin' => User::find(auth()->id()),
+            'jumsis' => User::role('siswa')->count(),
+            'langgar' => Pelanggaran::all()->count(),
+            'kelas' => Kelas::all()->count(),
+        ]);
+    }
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('admin-login')->with('logout', 'Anda Berhasil Logout');
+        return redirect()->route('siswa-login')->with('logout', 'Anda Berhasil Logout');
     }
     public function profile()
     {
@@ -88,10 +98,10 @@ class LoginController extends Controller
             'tempat' => 'required',
             'ttl' => 'required',
             'tlpn' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'nullable|min:8|confirmed',
             'avatar' => 'nullable',
         ]);
-        if ($request->avatar != " ") {
+        if ($request->avatar == " ") {
             $kin = $request->user()->update([
                 'email' => $request->email,
                 'alamat' =>  $request->alamat,
@@ -116,7 +126,23 @@ class LoginController extends Controller
                 'avatar' => $filename,
             ]);
         }
-        @dd('$request->user()');
-        // return redirect()->back();
+        // @dd('$request->user()');
+        return redirect()->back();
+    }
+    // public function ortu($user_uuid)
+    // {
+    //     return view('partisi.ortu', [
+    //         'admin' => User::find(auth()->id()),
+    //         'yauda' => User::where('user_uuid', $user_uuid)->get(),
+    //         'pelsis' => PelanggaranSiswa::where('user_uuid', $user_uuid)->get()
+    //     ]);
+    // }
+    public function ortu($user_uuid)
+    {
+        return view('partisi.ortu', [
+            'yauda' => User::where('user_uuid', $user_uuid)->get(),
+            'pelsis' => PelanggaranSiswa::where('user_uuid', $user_uuid)->get(),
+            // 'babi' => PelanggaranSiswa::addSelect(['point' => DB::selectRaw('sum(point)  as po')->whereColumn('user_uuid', $user_uuid)->groupBy('user_uuid')])->havingRaw('point < ?', [1])->groupBy('user_uuid')->get()
+        ]);
     }
 }

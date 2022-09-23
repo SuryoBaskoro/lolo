@@ -16,7 +16,7 @@ class CreatePelanggaranSiswasTable extends Migration
         Schema::create('pelanggaran_siswas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('user_uuid');
+            $table->string('user_uuid')->nullable();
             // $table->string('nomor')->nullable();
             $table->string('nama')->nullable();
             $table->string('point')->nullable();

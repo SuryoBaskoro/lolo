@@ -53,7 +53,15 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            showing
+                            {{ $siswa->firstItem() }}
+                            to
+                            {{ $siswa->lastItem() }}
+                            of
+                            {{ $siswa->total() }}
+                            entries
                         </table>
+                        {{ $siswa->links() }}
                     </div>
                 </div>
             </div>

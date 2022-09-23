@@ -36,7 +36,15 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            showing
+                            {{ $data->firstItem() }}
+                            to
+                            {{ $data->lastItem() }}
+                            of
+                            {{ $data->total() }}
+                            entries
                         </table>
+                        {{ $data->links() }}
                     </div>
                 </div>
             </div>

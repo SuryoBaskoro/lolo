@@ -69,7 +69,7 @@ class User extends Authenticatable
     }
     public function PelanggaranSiswa()
     {
-        return $this->belongsToMany(PelanggaranSiswa::class);
+        return $this->hasMany(PelanggaranSiswa::class);
     }
     public function PointSiswa()
     {

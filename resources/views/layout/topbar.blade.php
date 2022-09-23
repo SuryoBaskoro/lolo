@@ -20,7 +20,7 @@
                     <span class="user-profile"><img
                             src="@if ($admin->avatar == null) {{ asset('assets/images/yoda.png') }}
                         @else
-                        {{ asset('assets/images/' . $admin->avatar) }} @endif"
+                        {{ asset('avatar/' . $admin->avatar) }} @endif"
                             class="img-circle" alt="user avatar"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
@@ -28,7 +28,10 @@
                         <a href="javaScript:void();">
                             <div class="media">
                                 <div class="avatar"><img class="align-self-start mr-3"
-                                        src="{{ asset('assets/images/' . $admin->avatar) }}" alt="user avatar"></div>
+                                        src="@if ($admin->avatar == null) {{ asset('assets/images/yoda.png') }}
+                                        @else
+                                        {{ asset('avatar/' . $admin->avatar) }} @endif"
+                                        alt="user avatar"></div>
                                 <div class="media-body">
                                     <h6 class="mt-2 user-title">{{ $admin->name }}</h6>
                                     <p class="user-subtitle">{{ $admin->email }}</p>
@@ -39,10 +42,16 @@
                     <li class="dropdown-divider"></li>
                     <li class="dropdown-item"><i class="zmdi zmdi-account mr-2"></i> Account</li>
                     <li class="dropdown-divider"></li>
-                    <li class="dropdown-item"><a href="{{ route('logout') }}"><i class="icon-power mr-2"></i> Logout</a>
-                    </li>
-                </ul>
+                    @if ($admin->roles()->first()->name == 'superadmin')
+                        <li class="dropdown-item"><a href="{{ route('logout') }}"><i class="icon-power mr-2"></i>
+                                Logout</a>
+                        @else
+                        <li class="dropdown-item"><a href="{{ route('siswa-logout') }}"><i class="icon-power mr-2"></i>
+                                Logout</a>
+                    @endif
             </li>
+        </ul>
+        </li>
         </ul>
     </nav>
 </header>

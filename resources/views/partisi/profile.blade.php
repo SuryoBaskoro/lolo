@@ -25,7 +25,7 @@
                         <div id="caption"></div>
                     </div>
                     <h5 class="card-title">{{ $admin->name }}</h5>
-                    <h3>{!! DNS2D::getBarcodeHtml('https://127.0.0.0.1/laporan/' . $admin->user_uuid, 'QRCODE', 10, 10) !!}</h3>
+                    <h3>{!! DNS2D::getBarcodeHtml('http://192.168.100.201:8000/laporan/' . $admin->user_uuid, 'QRCODE', 10, 10) !!}</h3>
                     {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
                     <div class="icon-block">
@@ -253,7 +253,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <label class="col-lg-6 col-form-label form-control-label">Tanggal Lahir</label>
-                                        <input class="form-control" type="date" name="ttl">
+                                        <input class="form-control" type="date" name="ttl"
+                                            value="{{ $admin->ttl }}">
                                     </div>
                                 </div>
 
